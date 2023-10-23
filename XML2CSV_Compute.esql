@@ -20,8 +20,6 @@ CREATE COMPUTE MODULE XML2CSV_Compute
 		CREATE LASTCHILD OF headerRef TYPE NameValue NAME 'position' VALUE 'position';
 		CREATE LASTCHILD OF headerRef TYPE NameValue NAME 'salary' VALUE 'salary';
 
-		DECLARE id,firstName,lastName,email,position,salary CHARACTER '';
-
 		DECLARE I INTEGER 1;
 		FOR atEmployee AS InputRoot.XMLNSC.employees.employee[] DO
 			CREATE LASTCHILD OF recordRef.record[I] TYPE NameValue NAME 'id' VALUE inRef.employee[I].id;
