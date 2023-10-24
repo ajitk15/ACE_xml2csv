@@ -35,7 +35,15 @@
                         </xsd:sequence>
 					</xsd:complexType>
 				</xsd:element>				
-			</xsd:sequence>
+                			<xsd:element name="footer">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element default="total_cost" name="total_cost" type="xsd:string"/>
+                                        <xsd:element name="total_cost_value" type="xsd:string"/>
+                        </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+            </xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
 

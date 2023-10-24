@@ -9,3 +9,4 @@ id,firstName,lastName,email,position,salary
 8,Emily,Clark,emily.clark@example.com,Product Manager,85000
 9,Robert,Hall,robert.hall@example.com,Customer Support Specialist,52000
 10,Mary,Turner,mary.turner@example.com,Data Analyst,67000
+total_cost,50000

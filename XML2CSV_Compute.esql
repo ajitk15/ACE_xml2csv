@@ -5,9 +5,11 @@ CREATE COMPUTE MODULE XML2CSV_Compute
 
 		CREATE FIELD OutputRoot.DFDL.employe_xml_2_csv.header;
 		CREATE FIELD OutputRoot.DFDL.employe_xml_2_csv.record;
+		CREATE FIELD OutputRoot.DFDL.employe_xml_2_csv.footer;
 		
 		DECLARE recordRef REFERENCE TO OutputRoot.DFDL.employe_xml_2_csv;
 		DECLARE headerRef REFERENCE TO OutputRoot.DFDL.employe_xml_2_csv.header;
+		DECLARE footerRef REFERENCE TO OutputRoot.DFDL.employe_xml_2_csv.footer;
 		
 		SET OutputRoot.Properties.MessageType = '{}:employe_xml_2_csv';
 
@@ -21,6 +23,8 @@ CREATE COMPUTE MODULE XML2CSV_Compute
 		CREATE LASTCHILD OF headerRef TYPE NameValue NAME 'salary' VALUE 'salary';
 
 		DECLARE I INTEGER 1;
+		DECLARE total_cost INTEGER 0;
+		
 		FOR atEmployee AS InputRoot.XMLNSC.employees.employee[] DO
 			CREATE LASTCHILD OF recordRef.record[I] TYPE NameValue NAME 'id' VALUE inRef.employee[I].id;
 			CREATE LASTCHILD OF recordRef.record[I] TYPE NameValue NAME 'firstName' VALUE inRef.employee[I].firstName;
@@ -28,8 +32,14 @@ CREATE COMPUTE MODULE XML2CSV_Compute
 			CREATE LASTCHILD OF recordRef.record[I] TYPE NameValue NAME 'email' VALUE inRef.employee[I].email;
 			CREATE LASTCHILD OF recordRef.record[I] TYPE NameValue NAME 'position' VALUE inRef.employee[I].position;
 			CREATE LASTCHILD OF recordRef.record[I] TYPE NameValue NAME 'salary' VALUE inRef.employee[I].salary;
+			SET total_cost = total_cost + CAST(inRef.employee[I].salary AS INTEGER);
 			SET I = I + 1;
 		END FOR;
+		
+		
+		CREATE LASTCHILD OF footerRef TYPE NameValue NAME 'total_cost' VALUE 'total_cost';
+		CREATE LASTCHILD OF footerRef TYPE NameValue NAME 'total_cost_value' VALUE total_cost;
+		
 		RETURN TRUE;
 	END;
 END MODULE;
